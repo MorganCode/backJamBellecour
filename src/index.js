@@ -9,15 +9,11 @@ io.on("connection", socket => {
 
   socket.on("set-name", name => {
     socket.username = name;
-    io.emit("users-changed", { user: name, event: "joined" });
+    io.emit("users-changed", { user: socket.username, event: "joined" });
   });
 
-  socket.on("send-message", message => {
-    io.emit("message", {
-      msg: message.text,
-      user: socket.username,
-      createdAt: new Date()
-    });
+  socket.on("start-game", name => {
+    io.emit("startGame");
   });
 
   socket.on("send-move", ({ x, y }) => {
